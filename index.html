@@ -8,154 +8,115 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <div class="header-app">
-        <div class="brand">
-            <div class="logo-circle">SJ</div>
-            <div>
-                <h1 class="title-main">Bingo SJDA</h1>
-                <p class="subtitle-main">Residencia San José del Ávila</p>
-            </div>
-        </div>
-        <div class="status-badge"><div class="status-dot"></div>SISTEMA ACTIVO</div>
-    </div>
-    
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="cambiarPestana('sorteo', this)">📋 Control de sorteo</button>
-        <button class="tab-btn" onclick="cambiarPestana('compra', this)">🛒 Comprar Cartón</button>
-        <button class="tab-btn" onclick="cambiarPestana('revision', this)">📦 Datos de Pago</button>
-    </div>
-
-    <div class="banner-horarios">
-        <div class="horarios-left">
-            <span style="font-size:1.5rem; background:rgba(0,0,0,0.04); padding:10px; border-radius:10px;">📅</span>
-            <div><p class="horarios-title">Horarios de Bingo</p><p class="horarios-desc">Todos los domingos</p></div>
-        </div>
-        <div class="grid-horas"><div class="hora-badge">10:00 a. m.</div><div class="hora-badge">2:00 p. m.</div><div class="hora-badge">6:00 p. m.</div></div>
-    </div>
-
-    <div id="vista-sorteo" class="main-dashboard TargetView">
-        <div class="panel-block">
-            <h2 class="block-title">01 Configuración de la partida</h2>
-            <p class="block-subtitle">Ajustes económicos en tiempo real</p>
-            <div class="input-group">
-                <div class="field-box">
-                    <label>Tasa BCV del día Bs. / USD</label>
-                    <input type="number" id="tasaBcv" value="56.50" step="0.01" oninput="calcularPremios()">
-                </div>
-                <div class="field-box">
-                    <label>Cartones vendidos unidades</label>
-                    <input type="number" id="cartonesVendidos" value="500" oninput="calcularPremios()">
-                </div>
-            </div>
-            <div class="grid-cards-premios">
-                <div class="card-calculo"><small>Costo por cartón ($3 USD)</small><div class="monto" id="txtCostoBs">— Bs.</div></div>
-                <div class="card-calculo"><small>Ganador cartón lleno (60%)</small><div class="monto" id="txtGanadorBs" style="color:#B78103;">— Bs.</div></div>
-                <div class="card-calculo"><small>Torre ganadora (10%)</small><div class="monto" id="txtTorreBs" style="color:#154D7C;">— Bs.</div></div>
-            </div>
-        </div>
-        <div class="panel-block">
-            <h2 class="block-title">02 Tómbola automática</h2>
-            <p class="block-subtitle">Bolas extraídas al azar · 75 en total</p>
-            <div class="tombola-wrapper">
-                <div class="sphere-container"><div id="bolaActual" class="ball-active">--</div></div>
-                <div class="counter-text" id="statusSorteo">Sorteo listo · 0 / 75 bolas</div>
-            </div>
-            <div class="action-footer">
-                <button class="btn-action secondary" onclick="reiniciarSorteo()">Reiniciar</button>
-                <button class="btn-action primary" id="btnIniciar" onclick="toggleSorteo()">Iniciar sorteo</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="vista-compra" class="main-dashboard TargetView" style="display:none; grid-template-columns:1fr;">
-        <div class="panel-block">
-            <h2 class="block-title">🛒 Comprar Cartón (Automatizado)</h2>
-            <p class="block-subtitle">Registra tus datos para recibir tus cartones digitales</p>
-            <div class="input-group">
-                <div class="field-box">
-                    <label>Nombre del Vecino</label>
-                    <input type="text" id="compraNombre" placeholder="Ej. Ana Pérez">
-                </div>
-                <div class="field-box">
-                    <label>Torre de Residencia</label>
-                    <select id="compraTorre">
-                        <option value="Torre A">Torre A</option><option value="Torre B">Torre B</option><option value="Torre C">Torre C</option><option value="Torre D">Torre D</option><option value="Torre E">Torre E</option><option value="Torre F">Torre F</option><option value="Torre G">Torre G</option><option value="Torre H">Torre H</option><option value="Torre I">Torre I</option>
-                    </select>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="field-box">
-                    <label>Cantidad de cartones deseados</label>
-                    <input type="number" id="compraCantidad" value="1" min="1" oninput="calcularTotalCompra()">
-                </div>
-                <div class="field-box">
-                    <label>Monto total a transferir</label>
-                    <div style="background:white; padding:12px; border-radius:10px; border:1px solid var(--border-line); font-weight:800;" id="totalCompraBs">0.00 Bs.</div>
-                </div>
-            </div>
-            <button class="btn-action primary" style="width:100%; padding:15px; margin-top:15px;" onclick="enviarPedidoWhatsApp()">Proceder al Pago vía WhatsApp 🚀</button>
-        </div>
-    </div>
-
-    <div id="vista-revision" class="main-dashboard TargetView" style="display:none; grid-template-columns:1fr;">
-        <div class="panel-block">
-            <h2 class="block-title">📦 Cuentas Destino para Pago Móvil</h2>
-            <p class="block-subtitle">Datos oficiales de administración</p>
-            <div style="background:white; padding:20px; border-radius:12px; border:1px solid var(--border-line); line-height:1.8;">
-                <p><strong>Banco:</strong> Banesco (0134)</p>
-                <p><strong>Teléfono Celular:</strong> 0414-2275785</p>
-                <p><strong>Titular:</strong> Jessica Blanco</p>
-            </div>
-        </div>
-    </div>
+<div class="background-balls">
+<div class="floating-ball b-blue" style="top:10%;left:5%;animation-duration:12s;">B42</div>
+<div class="floating-ball b-red" style="top:25%;left:40%;animation-duration:18s;">I20</div>
+<div class="floating-ball b-white" style="top:12%;left:80%;animation-duration:14s;">N51</div>
+<div class="floating-ball b-green" style="top:45%;left:15%;animation-duration:16s;">G7</div>
+<div class="floating-ball b-yellow" style="top:65%;left:75%;animation-duration:20s;">O10</div>
+<div class="floating-ball b-blue" style="top:75%;left:10%;animation-duration:15s;">B69</div>
+<div class="floating-ball b-red" style="top:85%;left:50%;animation-duration:13s;">I13</div>
+<div class="floating-ball b-white" style="top:55%;left:90%;animation-duration:17s;">N47</div>
 </div>
-
+<div class="container">
+<div class="header-app">
+<div class="brand"><div class="logo-circle">SJ</div><div><h1 class="title-main">Bingo SJDA</h1><p class="subtitle-main">Residencia San José del Ávila</p></div></div>
+<div class="status-badge"><div class="status-dot"></div>SISTEMA ACTIVO</div>
+</div>
+<div class="nav-tabs">
+<button class="tab-btn active" onclick="cambiarPestana('sorteo',this)">📋 Control de sorteo</button>
+<button class="tab-btn" onclick="cambiarPestana('compra',this)">🛒 Comprar Cartón</button>
+<button class="tab-btn" onclick="cambiarPestana('revision',this)">📦 Datos de Pago</button>
+</div>
+<div class="banner-horarios">
+<div class="horarios-left"><span style="font-size:1.5rem;background:rgba(255,255,255,0.1);padding:10px;border-radius:10px;">📅</span><div><p class="horarios-title">Horarios de Bingo</p><p class="horarios-desc">Todos los domingos</p></div></div>
+<div class="grid-horas"><div class="hora-badge">10:00 a. m.</div><div class="hora-badge">2:00 p. m.</div><div class="hora-badge">6:00 p. m.</div></div>
+</div>
+<div id="vista-sorteo" class="main-dashboard TargetView">
+<div class="panel-block">
+<h2 class="block-title">01 Configuración de la partida</h2><p class="block-subtitle">Ajustes económicos en tiempo real</p>
+<div class="input-group">
+<div class="field-box"><label>Tasa BCV del día Bs. / USD</label><input type="number" id="tasaBcv" value="56.50" step="0.01" oninput="calcularPremios()"></div>
+<div class="field-box"><label>Cartones vendidos unidades</label><input type="number" id="cartonesVendidos" value="500" oninput="calcularPremios()"></div>
+</div>
+<div class="grid-cards-premios">
+<div class="card-calculo"><small>Costo por cartón ($3 USD)</small><div class="monto" id="txtCostoBs">— Bs.</div></div>
+<div class="card-calculo"><small>Ganador cartón lleno (60%)</small><div class="monto" id="txtGanadorBs" style="color:#FFEB3B;">— Bs.</div></div>
+<div class="card-calculo"><small>Torre ganadora (10%)</small><div class="monto" id="txtTorreBs" style="color:#00E5FF;">— Bs.</div></div>
+</div>
+</div>
+<div class="panel-block">
+<h2 class="block-title">02 Tómbola automática</h2><p class="block-subtitle">Bolas extraídas al azar · 75 en total</p>
+<div class="tombola-wrapper">
+<div class="sphere-container"><div id="bolaActual" class="ball-active">--</div></div>
+<div class="counter-text" id="statusSorteo">Sorteo listo · 0 / 75 bolas</div>
+</div>
+<div class="action-footer"><button class="btn-action secondary" onclick="reiniciarSorteo()">Reiniciar</button><button class="btn-action primary" id="btnIniciar" onclick="toggleSorteo()">Iniciar sorteo</button></div>
+</div>
+</div>
+<div id="vista-compra" class="main-dashboard TargetView" style="display:none;grid-template-columns:1fr;">
+<div class="panel-block">
+<h2 class="block-title">🛒 Comprar Cartón (Automatizado)</h2><p class="block-subtitle">Registra tus datos para recibir tus cartones digitales</p>
+<div class="input-group">
+<div class="field-box"><label>Nombre del Vecino</label><input type="text" id="compraNombre" placeholder="Ej. Ana Pérez"></div>
+<div class="field-box"><label>Torre de Residencia</label><select id="compraTorre"><option value="Torre A">Torre A</option><option value="Torre B">Torre B</option><option value="Torre C">Torre C</option><option value="Torre D">Torre D</option><option value="Torre E">Torre E</option><option value="Torre F">Torre F</option><option value="Torre G">Torre G</option><option value="Torre H">Torre H</option><option value="Torre I">Torre I</option></select></div>
+</div>
+<div class="input-group">
+<div class="field-box"><label>Cantidad de cartones deseados</label><input type="number" id="compraCantidad" value="1" min="1" oninput="calcularTotalCompra()"></div>
+<div class="field-box"><label>Monto total a transferir</label><div style="background:rgba(255,255,255,0.06);padding:12px;border-radius:10px;border:1px solid var(--border-line);font-weight:800;" id="totalCompraBs">0.00 Bs.</div></div>
+</div>
+<button class="btn-action primary" style="width:100%;padding:15px;margin-top:15px;" onclick="enviarPedidoWhatsApp()">Proceder al Pago vía WhatsApp 🚀</button>
+</div>
+</div>
+<div id="vista-revision" class="main-dashboard TargetView" style="display:none;grid-template-columns:1fr;">
+<div class="panel-block">
+<h2 class="block-title">📦 Cuentas Destino para Pago Móvil</h2><p class="block-subtitle">Datos oficiales de administración</p>
+<div style="background:rgba(255,255,255,0.06);padding:20px;border-radius:12px;border:1px solid var(--border-line);line-height:1.8;">
+<p><strong>Banco:</strong> Banesco (0134)</p><p><strong>Teléfono Celular:</strong> 0414-2275785</p><p><strong>Titular:</strong> Jessica Blanco</p>
+</div>
+</div>
+</div>
+</div>
 <script>
-let bolasDisponibles = Array.from({length: 75}, (_, i) => i + 1), bolasSacadas = [], juegoInterval = null;
-function cambiarPestana(v, b) {
-    document.querySelectorAll('.TargetView').forEach(e => e.style.display = 'none');
-    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-    if(v === 'sorteo') document.getElementById('vista-sorteo').style.display = 'grid';
-    else if(v === 'compra') document.getElementById('vista-compra').style.display = 'block';
-    else document.getElementById('vista-revision').style.display = 'block';
-    b.classList.add('active');
+let bolasDisponibles=Array.from({length:75},(_,i)=>i+1),bolasSacadas=[],juegoInterval=null;
+function cambiarPestana(v,b){
+document.querySelectorAll('.TargetView').forEach(e=>e.style.display='none');
+document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+if(v==='sorteo')document.getElementById('vista-sorteo').style.display='grid';
+else if(v==='compra')document.getElementById('vista-compra').style.display='block';
+else document.getElementById('vista-revision').style.display='block';b.classList.add('active');
 }
-function obtenerLetra(n) { if (n <= 15) return 'B'; if (n <= 30) return 'I'; if (n <= 45) return 'N'; if (n <= 60) return 'G'; return 'O'; }
-function calcularPremios() {
-    const cUSD = 3, t = parseFloat(document.getElementById('tasaBcv').value) || 0, cant = parseInt(document.getElementById('cartonesVendidos').value) || 0;
-    const cBs = cUSD * t, totBs = cant * cBs;
-    document.getElementById('txtCostoBs').innerText = `${cBs.toFixed(2)} Bs.`;
-    document.getElementById('txtGanadorBs').innerText = `${(totBs * 0.60).toLocaleString('es-VE', {minimumFractionDigits:2})} Bs.`;
-    document.getElementById('txtTorreBs').innerText = `${(totBs * 0.10).toLocaleString('es-VE', {minimumFractionDigits:2})} Bs.`;
-    calcularTotalCompra();
+function obtenerLetra(n){if(n<=15)return 'B';if(n<=30)return 'I';if(n<=45)return 'N';if(n<=60)return 'G';return 'O';}
+function calcularPremios(){
+const cUSD=3,t=parseFloat(document.getElementById('tasaBcv').value)||0,cant=parseInt(document.getElementById('cartonesVendidos').value)||0;
+const cBs=cUSD*t,totBs=cant*cBs;document.getElementById('txtCostoBs').innerText=`${cBs.toFixed(2)} Bs.`;
+document.getElementById('txtGanadorBs').innerText=`${(totBs*0.60).toLocaleString('es-VE',{minimumFractionDigits:2})} Bs.`;
+document.getElementById('txtTorreBs').innerText=`${(totBs*0.10).toLocaleString('es-VE',{minimumFractionDigits:2})} Bs.`;calcularTotalCompra();
 }
-function calcularTotalCompra() {
-    const t = parseFloat(document.getElementById('tasaBcv').value) || 0, cant = parseInt(document.getElementById('compraCantidad').value) || 0;
-    document.getElementById('totalCompraBs').innerText = `${(cant * 3 * t).toLocaleString('es-VE', {minimumFractionDigits:2})} Bs. (${cant * 3} USD)`;
+function calcularTotalCompra(){
+const t=parseFloat(document.getElementById('tasaBcv').value)||0,cant=parseInt(document.getElementById('compraCantidad').value)||0;
+document.getElementById('totalCompraBs').innerText=`${(cant*3*t).toLocaleString('es-VE',{minimumFractionDigits:2})} Bs. (${cant*3} USD)`;
 }
-function enviarPedidoWhatsApp() {
-    const n = document.getElementById('compraNombre').value, tor = document.getElementById('compraTorre').value, c = document.getElementById('compraCantidad').value, tas = document.getElementById('tasaBcv').value;
-    if(!n) { alert("Ingresa tu nombre."); return; }
-    const txt = encodeURIComponent(`Bingo SJDA 🎰\n\n👤 Vecino: ${n}\n🏢 Ubicación: ${tor}\n🎟️ Cantidad: ${c} cartón(es)\n💰 Total: ${(c*3*tas).toFixed(2)} Bs.\n\nAdjunto comprobante.`);
-    window.open(`https://wa.me{txt}`, '_blank');
+function enviarPedidoWhatsApp(){
+const n=document.getElementById('compraNombre').value,tor=document.getElementById('compraTorre').value,c=document.getElementById('compraCantidad').value,tas=document.getElementById('tasaBcv').value;
+if(!n){alert("Ingresa tu nombre.");return;}
+const txt=encodeURIComponent(`Bingo SJDA 🎰\n\n👤 Vecino: ${n}\n🏢 Ubicación: ${tor}\n🎟️ Cantidad: ${c} cartón(es)\n💰 Total: ${(c*3*tas).toFixed(2)} Bs.\n\nAdjunto comprobante.`);
+window.open(`https://wa.me{txt}`, '_blank');
 }
-function cantarVoz(l, n) { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); let u = new SpeechSynthesisUtterance(`${l} ${n}`); u.lang = 'es-VE'; window.speechSynthesis.speak(u); } }
-function extraerBola() {
-    if (bolasDisponibles.length === 0) { clearInterval(juegoInterval); return; }
-    let idx = Math.floor(Math.random() * bolasDisponibles.length), num = bolasDisponibles.splice(idx, 1)[0];
-    bolasSacadas.push(num); let letr = obtenerLetra(num);
-    document.getElementById('bolaActual').innerText = `${letr}${num}`;
-    document.getElementById('statusSorteo').innerText = `Sorteo: ${bolasSacadas.length} / 75 bolas`;
-    cantarVoz(letr, num);
+function cantarVoz(l,n){if('speechSynthesis' in window){window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(`${l} ${n}`);u.lang='es-VE';window.speechSynthesis.speak(u);}}
+function extraerBola(){
+if(bolasDisponibles.length===0){clearInterval(juegoInterval);return;}
+let idx=Math.floor(Math.random()*bolasDisponibles.length),num=bolasDisponibles.splice(idx,1);
+bolasSacadas.push(num);let letr=obtenerLetra(num);document.getElementById('bolaActual').innerText=`${letr}${num}`;
+document.getElementById('statusSorteo').innerText=`Sorteo: ${bolasSacadas.length} / 75 bolas`;cantarVoz(letr,num);
 }
-function toggleSorteo() {
-    if (juegoInterval) { clearInterval(juegoInterval); juegoInterval = null; document.getElementById('btnIniciar').innerText = "Iniciar sorteo"; }
-    else { document.getElementById('btnIniciar').innerText = "Pausar"; juegoInterval = setInterval(extraerBola, 4500); extraerBola(); }
+function toggleSorteo(){
+if(juegoInterval){clearInterval(juegoInterval);juegoInterval=null;document.getElementById('btnIniciar').innerText="Iniciar sorteo";}
+else{document.getElementById('btnIniciar').innerText="Pausar";juegoInterval=setInterval(extraerBola,4500);extraerBola();}
 }
-function reiniciarSorteo() {
-    clearInterval(juegoInterval); juegoInterval = null; bolasDisponibles = Array.from({length: 75}, (_, i) => i + 1); bolasSacadas = [];
-    document.getElementById('bolaActual').innerText = "--"; document.getElementById('statusSorteo').innerText = "Sorteo listo · 0 / 75"; document.getElementById('btnIniciar').innerText = "Iniciar sorteo";
+function reiniciarSorteo(){
+clearInterval(juegoInterval);juegoInterval=null;bolasDisponibles=Array.from({length:75},(_,i)=>i+1);bolasSacadas=[];
+document.getElementById('bolaActual').innerText="--";document.getElementById('statusSorteo').innerText="Sorteo listo · 0 / 75";document.getElementById('btnIniciar').innerText="Iniciar sorteo";
 }
 calcularPremios();
 </script>
