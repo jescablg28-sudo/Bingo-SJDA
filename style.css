@@ -1,0 +1,44 @@
+:root {
+    --bg-cream: #F5EFEB; --panel-beige: #FBF9F6; --ink-dark: #1E2522;
+    --muted-grey: #6E7571; --border-line: #E5DDD8; --primary-teal: #184137;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Nunito', sans-serif; background-color: var(--bg-cream); color: var(--ink-dark); padding: 20px; display: flex; justify-content: center; }
+.container { max-width: 950px; width: 100%; }
+.header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo-circle { width: 45px; height: 45px; background: var(--primary-teal); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Bowlby One', cursive; font-size: 1.3rem; }
+.title-main { font-family: 'Bowlby One', cursive; font-size: 1.8rem; margin: 0; }
+.subtitle-main { margin: 0; color: var(--muted-grey); font-weight: 700; font-size: 0.95rem; }
+.status-badge { background: #E8F5E9; color: #2E7D32; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.status-dot { width: 8px; height: 8px; background: #2E7D32; border-radius: 50%; }
+.nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border-line); padding-bottom: 10px; }
+.tab-btn { background: transparent; border: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 800; color: var(--muted-grey); cursor: pointer; border-radius: 8px; }
+.tab-btn.active { background: var(--primary-teal); color: white; }
+.banner-horarios { background: #EFE9E4; border: 1px solid var(--border-line); padding: 15px 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.horarios-left { display: flex; align-items: center; gap: 15px; }
+.horarios-title { font-weight: 800; font-size: 0.75rem; color: var(--muted-grey); text-transform: uppercase; margin: 0; }
+.horarios-desc { font-weight: 800; font-size: 1.1rem; margin: 2px 0 0 0; }
+.grid-horas { display: flex; gap: 10px; }
+.hora-badge { background: var(--panel-beige); border: 1px solid var(--border-line); padding: 8px 16px; border-radius: 8px; font-weight: 800; }
+.main-dashboard { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+.panel-block { background: var(--panel-beige); border: 1px solid var(--border-line); border-radius: 16px; padding: 24px; }
+.block-title { font-family: 'Bowlby One', cursive; font-size: 1.15rem; margin: 0 0 4px 0; }
+.block-subtitle { font-size: 0.8rem; font-weight: 700; color: var(--muted-grey); text-transform: uppercase; margin: 0 0 20px 0; }
+.input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.field-box { display: flex; flex-direction: column; }
+.field-box label { font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; }
+.field-box input { padding: 14px; border: 1px solid var(--border-line); border-radius: 10px; font-size: 1.05rem; font-weight: 700; }
+.info-sublabel { font-size: 0.8rem; color: var(--muted-grey); margin-top: 6px; font-weight: 600; }
+.grid-cards-premios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.card-calculo { background: white; border: 1px solid var(--border-line); padding: 14px; border-radius: 12px; }
+.card-calculo small { font-size: 0.78rem; font-weight: 700; color: var(--muted-grey); }
+.card-calculo .monto { font-size: 1.2rem; font-weight: 800; margin-top: 6px; color: #14362E; }
+.tombola-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 240px; }
+.sphere-container { width: 170px; height: 170px; border-radius: 50%; background: #EFE9E4; border: 4px dashed var(--border-line); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.ball-active { width: 110px; height: 110px; background: radial-gradient(circle at 30% 30%, #fff, #E5484D); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bowlby One', cursive; font-size: 2.8rem; box-shadow: 0 8px 20px rgba(229, 72, 77, 0.35); }
+.counter-text { font-size: 0.9rem; font-weight: 700; color: var(--muted-grey); }
+.action-footer { display: flex; gap: 12px; margin-top: 25px; justify-content: flex-end; }
+.btn-action { padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer; border: none; }
+.btn-action.primary { background: var(--primary-teal); color: white; }
+.btn-action.secondary { background: transparent; border: 1px solid var(--border-line); color: var(--ink-dark); }
