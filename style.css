@@ -1,7 +1,4 @@
-:root {
-    --bg-cream: #F5EFEB; --panel-beige: #FBF9F6; --ink-dark: #1E2522;
-    --muted-grey: #6E7571; --border-line: #E5DDD8; --primary-teal: #184137;
-}
+:root { --bg-cream: #F5EFEB; --panel-beige: #FBF9F6; --ink-dark: #1E2522; --muted-grey: #6E7571; --border-line: #E5DDD8; --primary-teal: #184137; }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: 'Nunito', sans-serif; background-color: var(--bg-cream); color: var(--ink-dark); padding: 20px; display: flex; justify-content: center; }
 .container { max-width: 950px; width: 100%; }
@@ -22,17 +19,17 @@ body { margin: 0; font-family: 'Nunito', sans-serif; background-color: var(--bg-
 .grid-horas { display: flex; gap: 10px; }
 .hora-badge { background: var(--panel-beige); border: 1px solid var(--border-line); padding: 8px 16px; border-radius: 8px; font-weight: 800; }
 .main-dashboard { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .main-dashboard { grid-template-columns: 1fr; } }
 .panel-block { background: var(--panel-beige); border: 1px solid var(--border-line); border-radius: 16px; padding: 24px; }
 .block-title { font-family: 'Bowlby One', cursive; font-size: 1.15rem; margin: 0 0 4px 0; }
 .block-subtitle { font-size: 0.8rem; font-weight: 700; color: var(--muted-grey); text-transform: uppercase; margin: 0 0 20px 0; }
 .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
 .field-box { display: flex; flex-direction: column; }
 .field-box label { font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; }
-.field-box input { padding: 14px; border: 1px solid var(--border-line); border-radius: 10px; font-size: 1.05rem; font-weight: 700; }
-.info-sublabel { font-size: 0.8rem; color: var(--muted-grey); margin-top: 6px; font-weight: 600; }
+.field-box input, .field-box select { padding: 14px; border: 1px solid var(--border-line); border-radius: 10px; font-size: 1.05rem; font-weight: 700; background: white; width: 100%; }
 .grid-cards-premios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .card-calculo { background: white; border: 1px solid var(--border-line); padding: 14px; border-radius: 12px; }
-.card-calculo small { font-size: 0.78rem; font-weight: 700; color: var(--muted-grey); }
+.card-calculo small { font-size: 0.78rem; font-weight: 700; color: var(--muted-grey); display: block; min-height: 32px; }
 .card-calculo .monto { font-size: 1.2rem; font-weight: 800; margin-top: 6px; color: #14362E; }
 .tombola-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 240px; }
 .sphere-container { width: 170px; height: 170px; border-radius: 50%; background: #EFE9E4; border: 4px dashed var(--border-line); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
