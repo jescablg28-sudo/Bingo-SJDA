@@ -1,0 +1,63 @@
+// VARIABLES DE CONFIGURACIÓN DEL BINGO
+const PRECIO_CARTON_BS = 40.00; // <- Cambia aquí el costo por cartón
+const TELEFONO_WHATSAPP = "584125555555"; // <- Cambia por tu número (con código de país)
+
+let selectedBingo = "Bingo 1 - 10:00 a. m.";
+let ticketCount = 1;
+
+// Inicializa el texto del precio unitario al cargar la pantalla
+document.getElementById('ticket-price-txt').innerText = PRECIO_CARTON_BS.toFixed(2);
+
+// Actualiza los elementos numéricos en pantalla
+function updateTotals() {
+    document.getElementById('qty-display').innerText = ticketCount;
+    const total = ticketCount * PRECIO_CARTON_BS;
+    document.getElementById('total-display').innerText = total.toFixed(2) + " Bs.";
+}
+
+// Controla el cambio visual al presionar los horarios de Bingo
+function selectSlot(number, timeStr) {
+    document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    selectedBingo = `Bingo ${number} - ${timeStr}`;
+}
+
+// Modifica la cantidad de cartones (+1 o -1)
+function changeQty(amount) {
+    ticketCount += amount;
+    if (ticketCount < 1) ticketCount = 1; // Previene selecciones menores a 1
+    if (ticketCount > 10) ticketCount = 10; // Límite máximo por compra (opcional)
+    updateTotals();
+}
+
+// Empaqueta los datos y redirige al chat de WhatsApp
+function sendOrder() {
+    const name = document.getElementById('user-name').value.trim();
+    const ref = document.getElementById('pay-ref').value.trim();
+    const totalBs = (ticketCount * PRECIO_CARTON_BS).toFixed(2);
+
+    // Validación básica de campos vacíos
+    if (!name || !ref) {
+        alert("Por favor, ingresa tu nombre y los últimos 4 dígitos de la referencia para validar tu pago móvil.");
+        return;
+    }
+
+    // Estructura limpia del mensaje para el administrador
+    const message = `*NUEVA COMPRA - BINGO SJDA*\n\n` +
+                    `👤 *Cliente:* ${name}\n` +
+                    `⏰ *Juego:* ${selectedBingo}\n` +
+                    `🎟️ *Cartones:* ${ticketCount}\n` +
+                    `💰 *Total Pagado:* ${totalBs} Bs.\n` +
+                    `🔢 *Referencia (Últimos 4):* ${ref}\n\n` +
+                    `_Solicito la asignación de mis cartones digitales correspondientes._`;
+
+    // Codificación segura del texto para la URL de WhatsApp
+    const urlEncodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me{TELEFONO_WHATSAPP}?text=${urlEncodedMessage}`;
+
+    // Abre el enlace del chat en una pestaña nueva
+    window.open(whatsappUrl, '_blank');
+}
+
+// Ejecución automática al abrir la página para calcular el primer valor base
+updateTotals();
