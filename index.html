@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bingo SJDA - Automatizado Completo</title>
+<link rel="preconnect" href="https://googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link href="https://googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #13123A;
+    --panel: #1D1C52;
+    --ink: #F2F3FF;
+    --muted: #A9ACD6;
+    --line: #34337A;
+    --cell: #262567;
+    --btn: #AB47BC;
+    --btntx: #FFFFFF;
+    --hl: #E5484D;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--bg);
+    color: var(--ink);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    max-width: 650px;
+    width: 100%;
+    background: var(--panel);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+h1 {
+    font-family: 'Bowlby One', cursive;
+    text-align: center;
+    color: #AB47BC;
+    font-size: 2.4rem;
+    margin: 0 0 5px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.seccion {
+    border: 1px solid var(--line);
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    background: var(--cell);
+}
+.grid-premios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+.card-premio {
+    background: rgba(255,255,255,0.04);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--line);
+}
+.bola-display {
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle at 35% 35%, #fff, #E5484D);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    font-family: 'Bowlby One', cursive;
+    margin: 15px auto;
+    box-shadow: 0 6px 20px rgba(229, 72, 77, 0.5);
+    animation: bounce 0.6s ease infinite alternate;
+}
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-6px); }
+}
+.tablero-bolas {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 6px;
+    margin-top: 12px;
+}
+.bola-tablero {
+    aspect-ratio: 1;
+    background: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--muted);
+    border: 1px solid var(--line);
+}
+.bola-tablero.sacada {
+    background: #2FA65A;
+    color: white;
+    border-color: #fff;
+    box-shadow: 0 0 8px #2FA65A;
+}
+.btn-principal {
+    background-color: var(--btn);
+    color: var(--btntx);
+    border: none;
+    padding: 15px 22px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.15rem;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 12px rgba(171, 71, 188, 0.3);
+}
+.btn-principal:hover {
+    background-color: #8E24AA;
+}
+.btn-principal:active {
+    transform: scale(0.98);
+}
+input, select {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+.historial-reciente {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 45px;
+}
+.bola-historial {
+    width: 40px;
+    height: 40px;
+    background: #585C84;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bingo SJDA</h1>
+    <div class="subtitle">Residencia San José del Ávila</div>
+
+    <!-- CONFIGURACIÓN -->
+    <div class="seccion">
+        <h3>⚙️ Configuración Económica de la Partida</h3>
+        <label>Tasa Oficial BCV (Bs.):</label>
+        <input type="number" id="tasaBcv" value="56.50" step="0.01" oninput="calcularPremios()">
+        
+        <label>Cantidad de Cartones Distribuidos (Mínimo 500):</label>
+        <input type="number" id="cartonesVendidos" value="500" oninput="calcularPremios()">
+        
+        <div class="grid-premios">
+            <div class="card-premio">
+                <small>Recaudación Bruta</small>
+                <div id="pozoTotal" style="font-weight:800; color:#4CAF50; font-size:1.2rem;">0.00 $</div>
+            </div>
+            <div class="card-premio">
+                <small>Premio Ganador (40%)</small>
+                <div id="premioGanador" style="font-weight:800; color:#FFEB3B; font-size:1.2rem;">0.00 Bs.</div>
+            </div>
+            <div class="card-premio">
+                <small>Torre de la Comunidad (40%)</small>
+                <div id="premioTorre" style="font-weight:800; color:#2196F3; font-size:1.2rem;">0.00 Bs.</div>
+            </div>
+            <div class="card-premio">
+                <small>Fondo Organización (20%)</small>
+                <div id="premioOrga" style="font-weight:800; color:#E5484D; font-size:1.2rem;">0.00 Bs.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTROL PRINCIPAL -->
+    <div class="seccion" style="text-align: center;">
+        <h3>🔮 Extracción Automática</h3>
+        <div id="bolaActual" class="bola-display">--</div>
+        <p id="infoLetra" style="font-weight: 800; font-size: 1.1rem; color: var(--muted); margin: 5px 0 15px 0;">¡Tómbola Lista!</p>
+        
+        <div class="historial-reciente" id="historial">
+            <!-- Aquí aparecen las últimas 4 bolas -->
+        </div>
+        <br>
+        <button class="btn-principal" id="btnIniciar" onclick="toggleSorteo()">Iniciar Sorteo Automático</button>
+    </div>
+
+    <!-- TABLERO GENERAL -->
+    <div class="seccion">
+        <h3>📊 Registro General de Balas (1 al 75)</h3>
+        <div class="tablero-bolas" id="tablero"></div>
+    </div>
+</div>
+
+<script>
+let bolasDisponibles = Array.from({length: 75}, (_, i) => i + 1);
+let bolasSacadas = [];
+let juegoInterval = null;
+
+const tableroEl = document.getElementById('tablero');
+for (let i = 1; i <= 75; i++) {
+    let div = document.createElement('div');
+    div.className = 'bola-tablero';
+    div.id = `b-${i}`;
+    div.innerText = i;
+    tableroEl.appendChild(div);
+}
+
+function obtenerLetra(num) {
+    if (num <= 15) return 'B';
+    if (num <= 30) return 'I';
+    if (num <= 45) return 'N';
+    if (num <= 60) return 'G';
+    return 'O';
+}
+
+function calcularPremios() {
+    const costoCarton = 3; 
+    const tasa = parseFloat(document.getElementById('tasaBcv').value) || 1;
+    const cantidad = parseInt(document.getElementById('cartonesVendidos').value) || 0;
+    
+    const totalDolares = cantidad * costoCarton;
+    const totalBs = totalDolares * tasa;
+
+    document.getElementById('pozoTotal').innerText = `${totalDolares.toLocaleString('es-ES', {minimumFractionDigits: 2})} $`;
+    document.getElementById('premioGanador').innerText = `${(totalBs * 0.40).toLocaleString('es-ES', {minimumFractionDigits: 2})} Bs.`;
+    document.getElementById('premioTorre').innerText = `${(totalBs * 0.40).toLocaleString('es-ES', {minimumFractionDigits: 2})} Bs.`;
+    document.getElementById('premioOrga').innerText = `${(totalBs * 0.20).toLocaleString('es-ES', {minimumFractionDigits: 2})} Bs.`;
+}
+
+function cantarVozNativa(letra, numero) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        let texto = `${letra}... número ${numero}`;
+        let utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'es-VE'; 
+        utterance.rate = 0.82; 
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+    }
+}
+
+function actualizarHistorial() {
+    const historialEl = document.getElementById('historial');
+    historialEl.innerHTML = '';
+    let copiaHistorial = [...bolasSacadas];
+    if (copiaHistorial.length > 1) {
+        let ultimas = copiaHistorial.slice(-5, -1).reverse();
+        ultimas.forEach(num => {
+            let letra = obtenerLetra(num);
+            let item = document.createElement('div');
+            item.className = 'bola-historial';
+            item.innerText = `${letra}${num}`;
+            historialEl.appendChild(item);
+        });
+    }
+}
+
+function sacarBolaAutomatica() {
+    if (bolasDisponibles.length === 0) {
+        clearInterval(juegoInterval);
+        juegoInterval = null;
+        document.getElementById('btnIniciar').innerText = "Juego Terminado";
+        document.getElementById('infoLetra').innerText = "¡Sorteo concluido con éxito!";
+        alert("Se han cantado las 75 esferas completas.");
+        return;
+    }
+
+    let randomIndex = Math.floor(Math.random() * bolasDisponibles.length);
+    let numero = bolasDisponibles.splice(randomIndex, 1);
+    bolasSacadas.push(numero);
+
+    let letra = obtenerLetra(numero);
+    
+    document.getElementById('bolaActual').innerText = `${letra}${numero}`;
+    document.getElementById('infoLetra').innerText = `¡Salió la letra ${letra}!`;
+    document.getElementById(`b-${numero}`).classList.add('sacada');
+
+    actualizarHistorial();
+    cantarVozNativa(letra, numero);
+}
+
+function toggleSorteo() {
+    const btn = document.getElementById('btnIniciar');
+    if (juegoInterval) {
+        clearInterval(juegoInterval);
+        juegoInterval = null;
+        btn.innerText = "Reanudar Sorteo Automático";
+    } else {
+        btn.innerText = "Pausar Sorteo";
+        juegoInterval = setInterval(sacarBolaAutomatica, 4800);
+        sacarBolaAutomatica();
+    }
+}
+
+calcularPremios();
+</script>
+</body>
+</html>
